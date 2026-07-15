@@ -7,17 +7,10 @@ import { getUserProfile } from "../services/user-service.js";
 import { getExamsBySubject } from "../services/exam-service.js";
 import { auth } from "../config/firebase-config.js";
 import { navigateTo } from "../router/router.js";
-
-// আপাতত হার্ডকোড করা বিষয় লিস্ট — পরে subjects কালেকশন থেকে আনা যাবে
-const SUBJECTS = [
-  { id: "bangla", name: "বাংলা" },
-  { id: "english", name: "ইংরেজি" },
-  { id: "math", name: "গণিত" },
-  { id: "science", name: "বিজ্ঞান" },
-];
+import { SUBJECTS } from "../config/subjects-config.js";
 
 export async function renderDashboardPage(rootEl) {
-  rootEl.appendChild(renderNavbar());
+  rootEl.appendChild(await renderNavbar());
   rootEl.appendChild(renderMobileNav());
 
   const main = document.createElement("main");
