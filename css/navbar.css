@@ -1,17 +1,18 @@
-/* navbar.css — শুধু .navbar এর ভেতরের এলিমেন্ট */
+/* navbar.css — টপ ন্যাভবার, ডেস্কটপে দেখা যায়, মোবাইলে লুকানো (বদলে bottom-nav দেখা যাবে) */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: var(--space-md) var(--space-lg);
   background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
 }
-.navbar-logo { font-weight: 700; font-size: 20px; color: var(--color-primary); }
-.navbar-links { display: flex; align-items: center; gap: var(--space-md); }
-.navbar-links a { color: var(--color-text-muted); text-decoration: none; }
-.navbar-links a:hover { color: var(--color-text); }
-.btn-outline {
-  background: transparent;
-  border: 1px solid var(--color-text-muted);
-  color: var(--color-text);
+.navbar-logo { font-family: var(--font-display); font-size: 22px; color: var(--color-accent); }
+.navbar-links { display: flex; align-items: center; gap: var(--space-lg); }
+.navbar-links a { color: var(--color-text-muted); text-decoration: none; font-weight: 500; }
+.navbar-links a:hover, .navbar-links a.is-active { color: var(--color-accent); }
+
+@media (max-width: 720px) {
+  .navbar-links a { display: none; } /* লিংকগুলো bottom-nav এ চলে যায় */
+  .navbar-links .btn-outline { display: inline-flex; } /* লগআউট বাটন টপেই থাকে */
 }
