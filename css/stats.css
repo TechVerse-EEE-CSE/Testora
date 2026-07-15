@@ -14,3 +14,63 @@
 }
 .stat-value { font-family: var(--font-mono); font-size: 28px; font-weight: 700; color: var(--color-accent); }
 .stat-card span:last-child { color: var(--color-text-muted); font-size: 13px; }
+
+.stats-empty { color: var(--color-text-muted); font-size: 14px; margin-top: var(--space-md); }
+
+.stats-section { margin-top: var(--space-lg); }
+.stats-section h3 { font-size: 15px; margin-bottom: var(--space-md); color: var(--color-text-muted); }
+
+/* শেষ ৭ দিনের হিটম্যাপ */
+.heatmap-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--space-sm); }
+.heatmap-cell {
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--color-border);
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.heatmap-cell[data-intensity="1"] { background: color-mix(in srgb, var(--color-accent) 25%, var(--color-surface)); }
+.heatmap-cell[data-intensity="2"] { background: color-mix(in srgb, var(--color-accent) 55%, var(--color-surface)); }
+.heatmap-cell[data-intensity="3"] { background: var(--color-accent); }
+.heatmap-count { font-family: var(--font-mono); font-size: 14px; font-weight: 700; }
+.heatmap-label { font-size: 10px; color: var(--color-text-muted); }
+.heatmap-cell[data-intensity="3"] .heatmap-label,
+.heatmap-cell[data-intensity="3"] .heatmap-count { color: #1a1408; }
+
+/* সাবজেক্ট-ভিত্তিক পারফরম্যান্স বার */
+.subject-breakdown { display: flex; flex-direction: column; gap: var(--space-md); }
+.breakdown-row {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+}
+.breakdown-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+.breakdown-percent { font-family: var(--font-mono); color: var(--color-text-muted); }
+.breakdown-track { height: 8px; border-radius: 999px; background: var(--color-bg); overflow: hidden; }
+.breakdown-fill { height: 100%; border-radius: 999px; }
+.breakdown-strong { background: var(--color-success); }
+.breakdown-medium { background: var(--color-accent); }
+.breakdown-weak { background: var(--color-error); }
+.breakdown-count { font-size: 11px; color: var(--color-text-muted); }
+
+/* সাম্প্রতিক এক্সাম লিস্ট */
+.recent-results-list { display: flex; flex-direction: column; gap: var(--space-sm); }
+.recent-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+}
+.recent-result-row:hover { border-color: var(--color-accent); }
+.recent-result-subject { font-size: 14px; }
+.recent-result-date { font-size: 11px; color: var(--color-text-muted); }
+.recent-result-score { font-size: 13px; color: var(--color-accent); }
