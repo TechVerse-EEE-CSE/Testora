@@ -20,6 +20,7 @@ export async function createUserProfile(uid, data) {
     totalMarks: 0,
     examsGiven: 0,
     totalTimeSpentSec: 0,
+    isAdmin: false, // Firebase Console থেকে ম্যানুয়ালি true করলে সেই ইউজার admin পেজ ব্যবহার করতে পারবে
     joinedAt: new Date().toISOString(),
   });
 }
