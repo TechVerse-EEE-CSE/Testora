@@ -35,3 +35,37 @@ export function calculateStreak(activityMap) {
   }
   return streak;
 }
+
+// শেষ ৭ দিনের ক্যালেন্ডার — { date, count } লিস্ট, সবচেয়ে পুরনোটা আগে (হিটম্যাপ রেন্ডারে ব্যবহার হবে)
+export function buildLast7Days(activityMap) {
+  const days = [];
+  const today = new Date();
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().split("T")[0];
+    days.push({ date: key, count: activityMap[key] || 0, label: d.toLocaleDateString("bn-BD", { weekday: "short" }) });
+  }
+  return days;
+}
+
+// সাবজেক্ট অনুযায়ী পারফরম্যান্স ব্রেকডাউন — কোন সাবজেক্টে শক্তিশালী/দুর্বল সেটা বোঝাতে
+// results = [{ subjectId, score, totalMarks, ... }]
+export function calculateSubjectBreakdown(results) {
+  const map = {};
+  results.forEach((r) => {
+    if (!r.subjectId) return;
+    if (!map[r.subjectId]) map[r.subjectId] = { totalScore: 0, totalMarks: 0, examCount: 0 };
+    map[r.subjectId].totalScore += r.score || 0;
+    map[r.subjectId].totalMarks += r.totalMarks || 0;
+    map[r.subjectId].examCount += 1;
+  });
+
+  return Object.entries(map)
+    .map(([subjectId, v]) => ({
+      subjectId,
+      examCount: v.examCount,
+      percentage: v.totalMarks > 0 ? Math.round((v.totalScore / v.totalMarks) * 100) : 0,
+    }))
+    .sort((a, b) => b.percentage - a.percentage);
+}
