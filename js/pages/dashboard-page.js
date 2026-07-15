@@ -2,6 +2,7 @@
 // লগইন করা ইউজারের হোম পেজ — বিষয় লিস্ট ও প্রতিটার এক্সামগুলো দেখায়
 
 import { renderNavbar } from "../components/navbar.js";
+import { renderMobileNav } from "../components/mobile-nav.js";
 import { getUserProfile } from "../services/user-service.js";
 import { getExamsBySubject } from "../services/exam-service.js";
 import { auth } from "../config/firebase-config.js";
@@ -17,6 +18,7 @@ const SUBJECTS = [
 
 export async function renderDashboardPage(rootEl) {
   rootEl.appendChild(renderNavbar());
+  rootEl.appendChild(renderMobileNav());
 
   const main = document.createElement("main");
   main.className = "dashboard-page";
