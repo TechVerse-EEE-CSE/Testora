@@ -11,12 +11,45 @@ import {
   getDocs,
   query,
   where,
+  limit,
+  updateDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // অ্যাডমিন থেকে নতুন এক্সাম তৈরি
 export async function createExam(examData) {
   // examData = { subjectId, title, durationMin, totalMarks, questionIds: [] }
   return await addDoc(collection(db, COLLECTIONS.EXAMS), examData);
+}
+
+// ⚠️ আগে admin panel-এ শুধু "প্রশ্ন যোগ করুন" পেজ ছিল, কিন্তু কোনো exam তৈরির UI ছিল না —
+// createExam() কখনো কল-ই হতো না। ফলে প্রশ্ন questions কালেকশনে ঢুকতো ঠিকই, কিন্তু কোনো exam
+// document তার questionIds-এ সেটা রেফার না করায় dashboard-এ সেই সাবজেক্টে কিছুই দেখাতো না।
+// এখন প্রতিবার প্রশ্ন যোগ হলে এই ফাংশন কল হয় — সেই সাবজেক্টের সব প্রশ্ন একসাথে নিয়ে
+// একটা "প্র্যাকটিস টেস্ট" exam বানায় (না থাকলে) বা আপডেট করে (থাকলে), যাতে আলাদা করে
+// exam তৈরির পেজে গিয়ে কিছু করতে না হয়।
+export async function syncExamForSubject(subjectId, subjectName, questions) {
+  const totalMarks = questions.reduce((sum, q) => sum + (Number(q.marks) || 0), 0);
+  const questionIds = questions.map((q) => q.id);
+
+  const existingQuery = query(
+    collection(db, COLLECTIONS.EXAMS),
+    where("subjectId", "==", subjectId),
+    limit(1)
+  );
+  const snap = await getDocs(existingQuery);
+
+  if (snap.empty) {
+    await createExam({
+      subjectId,
+      title: `${subjectName} — প্র্যাকটিস টেস্ট`,
+      durationMin: 30,
+      totalMarks,
+      questionIds,
+    });
+  } else {
+    const examDocId = snap.docs[0].id;
+    await updateDoc(doc(db, COLLECTIONS.EXAMS, examDocId), { totalMarks, questionIds });
+  }
 }
 
 export async function getExamById(examId) {
