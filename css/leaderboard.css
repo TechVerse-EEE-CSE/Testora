@@ -1,12 +1,18 @@
-/* leaderboard.css — শুধু .leaderboard-page এর ভেতরের এলিমেন্ট */
+/* leaderboard.css */
 .leaderboard-page { padding: var(--space-lg); max-width: 500px; margin: 0 auto; }
+.leaderboard-page h2 { margin-bottom: var(--space-md); }
+
 .leaderboard-row {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
   padding: var(--space-sm) var(--space-md);
   background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   margin-bottom: 8px;
 }
-.leaderboard-row.is-me { border: 1px solid var(--color-primary); }
-.rank { color: var(--color-text-muted); width: 40px; }
+.leaderboard-row.is-me { border-color: var(--color-accent); background: var(--color-surface-raised); }
+.rank { font-family: var(--font-mono); color: var(--color-text-muted); width: 32px; }
+.name { flex: 1; }
+.marks { font-family: var(--font-mono); color: var(--color-accent); font-weight: 700; }
