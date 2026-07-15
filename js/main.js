@@ -11,6 +11,8 @@ import { renderExamPage } from "./pages/exam-page.js";
 import { renderResultPage } from "./pages/result-page.js";
 import { renderLeaderboardPage } from "./pages/leaderboard-page.js";
 import { renderStatsPage } from "./pages/stats-page.js";
+import { renderProfilePage } from "./pages/profile-page.js";
+import { renderAddQuestionPage } from "./pages/admin/add-question-page.js";
 
 registerRoute("/login", renderLoginPage, { requiresAuth: false });
 registerRoute("/dashboard", renderDashboardPage);
@@ -18,6 +20,8 @@ registerRoute("/exam/:id", (root, id) => renderExamPage(root, id));
 registerRoute("/result/:id", (root, id) => renderResultPage(root, id));
 registerRoute("/leaderboard", renderLeaderboardPage);
 registerRoute("/stats", renderStatsPage);
+registerRoute("/profile", renderProfilePage);
+registerRoute("/admin/questions", renderAddQuestionPage);
 
 const appRoot = document.getElementById("app");
 
