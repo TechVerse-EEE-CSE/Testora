@@ -9,7 +9,7 @@ import { addQuestion } from "../../services/question-service.js";
 import { auth } from "../../config/firebase-config.js";
 import { navigateTo } from "../../router/router.js";
 import { showToast } from "../../utils/toast.js";
-import { SUBJECTS } from "../../config/subjects-config.js";
+import { CATEGORIES, getCategoryById } from "../../config/categories-config.js";
 
 export async function renderAddQuestionPage(rootEl) {
   const uid = auth.currentUser?.uid;
@@ -31,10 +31,15 @@ export async function renderAddQuestionPage(rootEl) {
 
     <form id="question-form" class="admin-form">
       <div class="field">
-        <label for="q-subject">বিষয়</label>
-        <select id="q-subject" required>
-          ${SUBJECTS.map((s) => `<option value="${s.id}">${s.name}</option>`).join("")}
+        <label for="q-category">ক্যাটাগরি</label>
+        <select id="q-category" required>
+          ${CATEGORIES.map((c) => `<option value="${c.id}">${c.name}</option>`).join("")}
         </select>
+      </div>
+
+      <div class="field">
+        <label for="q-subject">বিষয়</label>
+        <select id="q-subject" required></select>
       </div>
 
       <div class="field">
@@ -83,7 +88,21 @@ export async function renderAddQuestionPage(rootEl) {
   `;
 
   rootEl.appendChild(main);
+
+  const categorySelect = main.querySelector("#q-category");
+  populateSubjectOptions(main, categorySelect.value);
+  categorySelect.addEventListener("change", () => populateSubjectOptions(main, categorySelect.value));
+
   main.querySelector("#question-form").addEventListener("submit", (e) => handleSubmit(e, main));
+}
+
+// নির্বাচিত ক্যাটাগরি অনুযায়ী "বিষয়" ড্রপডাউন রিফ্রেশ করা — ক্যাটাগরি বদলালেই কল হয়
+function populateSubjectOptions(main, categoryId) {
+  const category = getCategoryById(categoryId);
+  const subjectSelect = main.querySelector("#q-subject");
+  subjectSelect.innerHTML = (category?.subjects || [])
+    .map((s) => `<option value="${s.id}">${s.name}</option>`)
+    .join("");
 }
 
 async function handleSubmit(e, main) {
@@ -92,6 +111,7 @@ async function handleSubmit(e, main) {
   submitBtn.disabled = true;
 
   const questionData = {
+    categoryId: main.querySelector("#q-category").value,
     subjectId: main.querySelector("#q-subject").value,
     question: main.querySelector("#q-text").value,
     options: [0, 1, 2, 3].map((i) => main.querySelector(`#q-opt-${i}`).value),
