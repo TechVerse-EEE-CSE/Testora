@@ -9,7 +9,7 @@ import { auth } from "../config/firebase-config.js";
 import { navigateTo } from "../router/router.js";
 
 export async function renderResultPage(rootEl, resultId) {
-  rootEl.appendChild(renderNavbar());
+  rootEl.appendChild(await renderNavbar());
   rootEl.appendChild(renderMobileNav());
 
   const main = document.createElement("main");
