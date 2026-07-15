@@ -6,13 +6,15 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-aut
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // আপনার Firebase কনসোল থেকে config কপি করে এখানে বসান
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyBrtEkFQnNBhObYWOkmjQZdmBaU1VOuWe8",
+  authDomain: "examiner-website.firebaseapp.com",
+  projectId: "examiner-website",
+  storageBucket: "examiner-website.firebasestorage.app",
+  messagingSenderId: "1044485570165",
+  appId: "1:1044485570165:web:b2e3ac83989536e4d8823c",
+  measurementId: "G-6NWJGYYD4N"
 };
 
 const app = initializeApp(firebaseConfig);
