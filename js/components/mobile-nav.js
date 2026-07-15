@@ -17,6 +17,11 @@ const NAV_ITEMS = [
     label: "পরিসংখ্যান",
     icon: `<svg viewBox="0 0 24 24"><path d="M4 20V10"/><path d="M12 20V4"/><path d="M20 20v-6"/></svg>`,
   },
+  {
+    path: "/profile",
+    label: "প্রোফাইল",
+    icon: `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>`,
+  },
 ];
 
 export function renderMobileNav() {
