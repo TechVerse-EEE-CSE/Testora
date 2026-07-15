@@ -2,6 +2,7 @@
 // ইউজারের প্রগ্রেস ও পরিসংখ্যান দেখানো
 
 import { renderNavbar } from "../components/navbar.js";
+import { renderMobileNav } from "../components/mobile-nav.js";
 import { getUserResults } from "../services/result-service.js";
 import {
   calculateAverageScore,
@@ -15,6 +16,7 @@ import { navigateTo } from "../router/router.js";
 
 export async function renderStatsPage(rootEl) {
   rootEl.appendChild(renderNavbar());
+  rootEl.appendChild(renderMobileNav());
 
   const main = document.createElement("main");
   main.className = "stats-page";
