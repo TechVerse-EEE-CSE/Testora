@@ -11,6 +11,13 @@
 .welcome-card h2 { font-size: 22px; margin-bottom: 4px; }
 .welcome-card p { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 13px; }
 
+.breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: var(--space-md); font-family: var(--font-mono); font-size: 13px; }
+.breadcrumb-sep { color: var(--color-text-muted); }
+.breadcrumb-item { color: var(--color-text-muted); }
+.breadcrumb-item.is-current { color: var(--color-accent); }
+.breadcrumb-link { background: none; border: none; padding: 0; cursor: pointer; color: var(--color-text-muted); font-family: var(--font-mono); font-size: 13px; text-decoration: underline; }
+.breadcrumb-link:hover { color: var(--color-accent); }
+
 .subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--space-md); }
 .subject-card {
   background: var(--color-surface);
