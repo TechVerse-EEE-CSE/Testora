@@ -1,0 +1,12 @@
+/* leaderboard.css — শুধু .leaderboard-page এর ভেতরের এলিমেন্ট */
+.leaderboard-page { padding: var(--space-lg); max-width: 500px; margin: 0 auto; }
+.leaderboard-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+}
+.leaderboard-row.is-me { border: 1px solid var(--color-primary); }
+.rank { color: var(--color-text-muted); width: 40px; }

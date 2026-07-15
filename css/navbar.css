@@ -1,0 +1,17 @@
+/* navbar.css — শুধু .navbar এর ভেতরের এলিমেন্ট */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-surface);
+}
+.navbar-logo { font-weight: 700; font-size: 20px; color: var(--color-primary); }
+.navbar-links { display: flex; align-items: center; gap: var(--space-md); }
+.navbar-links a { color: var(--color-text-muted); text-decoration: none; }
+.navbar-links a:hover { color: var(--color-text); }
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--color-text-muted);
+  color: var(--color-text);
+}

@@ -1,0 +1,4 @@
+/* result.css — শুধু .result-page এর ভেতরের এলিমেন্ট */
+.result-page { padding: var(--space-lg); display: flex; justify-content: center; }
+.result-card { background: var(--color-surface); padding: var(--space-lg); border-radius: var(--radius-lg); text-align: center; max-width: 400px; }
+.result-score { font-size: 40px; font-weight: 700; color: var(--color-primary); margin: var(--space-md) 0; }

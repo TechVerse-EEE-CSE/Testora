@@ -1,0 +1,17 @@
+/* variables.css — শুধু ডিজাইন টোকেন, কোনো এলিমেন্ট স্টাইল না */
+:root {
+  --color-primary: #4f46e5;
+  --color-primary-dark: #3730a3;
+  --color-bg: #0f1117;
+  --color-surface: #171a23;
+  --color-text: #eef0f5;
+  --color-text-muted: #9096a8;
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+}
