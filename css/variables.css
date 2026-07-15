@@ -1,17 +1,29 @@
-/* variables.css — শুধু ডিজাইন টোকেন, কোনো এলিমেন্ট স্টাইল না */
+/* variables.css — ডিজাইন টোকেন: এক্সাম-শিট/অ্যাডমিট-কার্ড ভাইব */
+@import url("https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap");
+
 :root {
-  --color-primary: #4f46e5;
-  --color-primary-dark: #3730a3;
-  --color-bg: #0f1117;
-  --color-surface: #171a23;
-  --color-text: #eef0f5;
-  --color-text-muted: #9096a8;
-  --color-success: #22c55e;
-  --color-error: #ef4444;
+  /* রং — গভীর নেভি বেস + হাইলাইটার-অ্যাম্বার অ্যাকসেন্ট */
+  --color-bg: #10121b;
+  --color-surface: #191c28;
+  --color-surface-raised: #222536;
+  --color-accent: #f2b84b;
+  --color-accent-deep: #c98f28;
+  --color-text: #eef0f7;
+  --color-text-muted: #8b90a8;
+  --color-success: #4ade80;
+  --color-error: #f87171;
+  --color-border: #2a2e40;
+
+  /* টাইপ */
+  --font-display: "Tiro Bangla", serif;
+  --font-body: "Hind Siliguri", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 
   --radius-md: 12px;
   --radius-lg: 20px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
+
+  --bottom-nav-height: 64px;
 }
