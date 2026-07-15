@@ -23,6 +23,7 @@ export async function renderNavbar() {
       <a href="#/dashboard">ড্যাশবোর্ড</a>
       <a href="#/leaderboard">লিডারবোর্ড</a>
       <a href="#/stats">পরিসংখ্যান</a>
+      <a href="#/profile">প্রোফাইল</a>
       ${adminLink}
       <button id="logout-btn" class="btn btn-outline">লগআউট</button>
     </div>
