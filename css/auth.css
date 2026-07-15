@@ -65,3 +65,67 @@
 }
 .field input:focus { outline: 2px solid var(--color-accent); outline-offset: 1px; }
 .auth-submit { margin-top: var(--space-sm); }
+
+.forgot-link {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: -6px;
+}
+.forgot-link:hover { color: var(--color-accent); }
+
+.forgot-note {
+  padding: 0 var(--space-lg) var(--space-lg);
+  color: var(--color-text-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.forgot-note button {
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 13px;
+  padding: 0;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 var(--space-lg);
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+.auth-divider::before, .auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.auth-google-wrap { padding: var(--space-lg); padding-top: var(--space-md); }
+.btn-google {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.12s ease;
+}
+.btn-google:hover { border-color: var(--color-accent); }
+.btn-google:disabled { opacity: 0.6; cursor: not-allowed; }
