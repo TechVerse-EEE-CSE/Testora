@@ -1,7 +1,64 @@
-/* exam.css — শুধু .exam-page এর ভেতরের এলিমেন্ট */
+/* exam.css — সিগনেচার: OMR-বাবল স্টাইল অপশন, উত্তরপত্রের ফিল-ইন সার্কেলের মতো লাগে */
 .exam-page { padding: var(--space-lg); max-width: 700px; margin: 0 auto; }
-.exam-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-lg); }
-.exam-timer { font-size: 20px; font-weight: 700; color: var(--color-primary); }
-.question-block { background: var(--color-surface); padding: var(--space-md); border-radius: var(--radius-md); margin-bottom: var(--space-md); }
-.question-text { margin-bottom: var(--space-sm); font-weight: 600; }
-.option-label { display: block; padding: 8px 0; cursor: pointer; }
+
+.exam-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px dashed var(--color-border);
+}
+.exam-timer {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-accent);
+  background: var(--color-surface);
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+}
+
+.question-block {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+}
+.question-text { margin-bottom: var(--space-md); font-weight: 600; }
+
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 10px 8px;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+}
+.option-label:hover { background: var(--color-surface-raised); }
+
+/* OMR বাবল — স্বাভাবিক রেডিও বাটন হাইড করে নিজস্ব সার্কেল বসানো */
+.option-label input[type="radio"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-text-muted);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: grid;
+  place-content: center;
+}
+.option-label input[type="radio"]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: transform 0.1s ease;
+  background: var(--color-accent);
+}
+.option-label input[type="radio"]:checked::before { transform: scale(1); }
+.option-label input[type="radio"]:checked { border-color: var(--color-accent); }
+
+#submit-exam-btn { width: 100%; margin-top: var(--space-sm); }
