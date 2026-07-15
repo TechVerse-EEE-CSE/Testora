@@ -5,7 +5,8 @@
 import { renderNavbar } from "../../components/navbar.js";
 import { renderMobileNav } from "../../components/mobile-nav.js";
 import { getUserProfile } from "../../services/user-service.js";
-import { addQuestion } from "../../services/question-service.js";
+import { addQuestion, getQuestionsBySubject } from "../../services/question-service.js";
+import { syncExamForSubject } from "../../services/exam-service.js";
 import { auth } from "../../config/firebase-config.js";
 import { navigateTo } from "../../router/router.js";
 import { showToast } from "../../utils/toast.js";
@@ -121,7 +122,18 @@ async function handleSubmit(e, main) {
 
   try {
     await addQuestion(questionData);
-    showToast("প্রশ্ন যোগ হয়েছে", "info");
+
+    // প্রশ্ন যোগ হওয়ার পর সেই সাবজেক্টের exam auto-sync — নাহলে dashboard-এ ছাত্র কিছুই দেখবে না
+    const category = getCategoryById(questionData.categoryId);
+    const subject = category?.subjects.find((s) => s.id === questionData.subjectId);
+    const allSubjectQuestions = await getQuestionsBySubject(questionData.subjectId);
+    await syncExamForSubject(
+      questionData.subjectId,
+      subject?.name || questionData.subjectId,
+      allSubjectQuestions
+    );
+
+    showToast("প্রশ্ন যোগ হয়েছে এবং এক্সাম আপডেট হয়েছে", "info");
     logRecentlyAdded(main, questionData);
     main.querySelector("#question-form").reset();
   } catch (err) {
