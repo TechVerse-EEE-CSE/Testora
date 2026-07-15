@@ -17,6 +17,9 @@ export async function createUserProfile(uid, data) {
     name: data.name,
     email: data.email,
     class: data.class || "",
+    targetCategory: data.targetCategory || "", // কোন পরীক্ষার জন্য প্রস্তুতি নিচ্ছে (ssc/hsc/admission/bcs)
+    photoURL: data.photoURL || "",
+    authProvider: data.authProvider || "email", // "email" | "google" — শুধু তথ্যের জন্য, প্রোফাইল পেজে দেখানো হয়
     totalMarks: 0,
     examsGiven: 0,
     totalTimeSpentSec: 0,
@@ -28,6 +31,21 @@ export async function createUserProfile(uid, data) {
 export async function getUserProfile(uid) {
   const snap = await getDoc(doc(db, COLLECTIONS.USERS, uid));
   return snap.exists() ? snap.data() : null;
+}
+
+// Google সাইন-ইনে প্রথমবার এলে প্রোফাইল বানানো, আগে থেকে থাকলে সেটাই ফেরত দেওয়া —
+// দ্বিতীয়বার Google দিয়ে ঢুকলে যাতে পুরনো ডাটা (totalMarks ইত্যাদি) মুছে না যায়
+export async function ensureUserProfile(uid, data) {
+  const existing = await getUserProfile(uid);
+  if (existing) return existing;
+  await createUserProfile(uid, data);
+  return await getUserProfile(uid);
+}
+
+// প্রোফাইল সেটিংস পেজ থেকে নাম/ক্লাস/টার্গেট-ক্যাটাগরি আপডেট
+export async function updateUserProfile(uid, data) {
+  // data = { name, class, targetCategory } — শুধু এই ফিল্ডগুলোই rules এ update করার অনুমতি আছে
+  await updateDoc(doc(db, COLLECTIONS.USERS, uid), data);
 }
 
 // এক্সাম শেষে ইউজারের টোটাল মার্ক/সময় আপডেট
