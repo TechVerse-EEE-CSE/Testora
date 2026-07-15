@@ -1,0 +1,70 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+    // নিজের users ডকুমেন্ট থেকে isAdmin ফ্ল্যাগ পড়ে চেক করা।
+    // isAdmin ফিল্ড ক্লায়েন্ট থেকে কখনো লেখা যায় না (নিচে users rule দেখুন) —
+    // শুধু Firebase Console থেকে ম্যানুয়ালি true করে দিতে হবে যাকে admin বানাতে চান।
+    function isAdmin() {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+    // request.resource.data (নতুন) আর resource.data (পুরনো) এর মধ্যে যা যা বদলাচ্ছে,
+    // সেগুলো allowedKeys এর বাইরে কিছু থাকলে false — users/{uid} এর update rule এ ব্যবহৃত হচ্ছে
+    function onlyUpdatingFields(allowedKeys) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(allowedKeys);
+    }
+
+    // ইউজার প্রোফাইল
+    match /users/{uid} {
+      allow read: if isSignedIn(); // লিডারবোর্ডে সবার নাম/মার্ক দেখাতে হয়, তাই যেকোনো লগইন করা ইউজার পড়তে পারবে
+      allow create: if isOwner(uid);
+      // নিজের নাম/ক্লাস/মার্ক-স্ট্যাটস বদলাতে পারবে, কিন্তু isAdmin কখনোই না —
+      // isAdmin না থাকায় onlyUpdatingFields এটাকে অ্যালাউড-লিস্টের বাইরে রেখে ব্লক করে দেয়
+      allow update: if isOwner(uid) &&
+        onlyUpdatingFields(['name', 'class', 'totalMarks', 'examsGiven', 'totalTimeSpentSec']);
+      allow delete: if false;
+    }
+
+    // বিষয় লিস্ট — admin লিখতে পারবে
+    match /subjects/{subjectId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // এক্সাম মেটাডাটা — admin লিখতে পারবে
+    match /exams/{examId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // প্রশ্ন — admin লিখতে পারবে। ⚠️ correctAnswer ফিল্ড এই মুহূর্তে ক্লায়েন্টে read হয়ে যাচ্ছে
+    // (question-service.js), যা দিয়ে ব্রাউজার DevTools থেকে উত্তর দেখে ফেলা সম্ভব।
+    // Firestore rules দিয়ে ফিল্ড-লেভেল hide করা যায় না। প্রোডাকশনে সমাধান: correctAnswer আলাদা
+    // কালেকশনে রাখুন এবং exam submission callable Cloud Function দিয়ে সার্ভার-সাইডে score করুন।
+    match /questions/{questionId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // রেজাল্ট — প্রতিটা ইউজার শুধু নিজেরটা পড়তে/তৈরি করতে পারবে, বদলাতে/মুছতে পারবে না
+    match /results/{resultId} {
+      allow read: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // ক্যাশড লিডারবোর্ড (ভবিষ্যতে Cloud Function দিয়ে আপডেট হবে) — এখন কোডে ব্যবহৃত হচ্ছে না,
+    // leaderboard-service.js আপাতত সরাসরি users কালেকশন থেকে পড়ছে
+    match /leaderboard/{docId} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+  }
+}
