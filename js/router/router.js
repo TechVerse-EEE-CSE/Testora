@@ -29,7 +29,7 @@ export function navigateTo(path) {
 
 function handleRouteChange() {
   const hash = window.location.hash.replace("#", "") || "/login";
-  const [path, param] = parseHash(hash);
+  const [path, param] = resolveRoute(hash);
   const route = routes[path];
 
   if (!route) {
@@ -52,11 +52,16 @@ function handleRouteChange() {
   route.renderFn(rootEl, param);
 }
 
-// "/exam/abc123" কে ["/exam/:id", "abc123"] এ ভাঙা
-function parseHash(hash) {
+// আগে registerRoute না চেক করেই "/segment/segment" কে "/segment/:id" ধরে নিতো —
+// তাতে "/admin/questions"-এর মতো স্ট্যাটিক ২-সেগমেন্ট রুট ভুলভাবে ":id" প্যাটার্নে চলে যেত।
+// এখন আগে exact static match চেক হয়, তারপর dynamic প্যাটার্ন।
+function resolveRoute(hash) {
+  if (routes[hash]) return [hash, null];
+
   const segments = hash.split("/").filter(Boolean);
   if (segments.length === 2) {
-    return [`/${segments[0]}/:id`, segments[1]];
+    const dynamicPath = `/${segments[0]}/:id`;
+    if (routes[dynamicPath]) return [dynamicPath, segments[1]];
   }
-  return [`/${segments.join("/")}`, null];
+  return [hash, null];
 }
