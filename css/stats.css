@@ -1,5 +1,16 @@
-/* stats.css — শুধু .stats-page এর ভেতরের এলিমেন্ট */
-.stats-page { padding: var(--space-lg); }
+/* stats.css — পারফোরেটেড স্ট্যাট কার্ড, স্কোরবোর্ড ভাইব */
+.stats-page { padding: var(--space-lg); max-width: 700px; margin: 0 auto; }
+.stats-page h2 { margin-bottom: var(--space-lg); }
+
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-md); }
-.stat-card { background: var(--color-surface); padding: var(--space-md); border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 4px; }
-.stat-value { font-size: 26px; font-weight: 700; color: var(--color-primary); }
+.stat-card {
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-value { font-family: var(--font-mono); font-size: 28px; font-weight: 700; color: var(--color-accent); }
+.stat-card span:last-child { color: var(--color-text-muted); font-size: 13px; }
