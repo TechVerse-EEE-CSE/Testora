@@ -7,7 +7,7 @@ import { getGlobalLeaderboard } from "../services/leaderboard-service.js";
 import { auth } from "../config/firebase-config.js";
 
 export async function renderLeaderboardPage(rootEl) {
-  rootEl.appendChild(renderNavbar());
+  rootEl.appendChild(await renderNavbar());
   rootEl.appendChild(renderMobileNav());
 
   const main = document.createElement("main");
