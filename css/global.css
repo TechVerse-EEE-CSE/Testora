@@ -8,6 +8,7 @@
 @import url("result.css");
 @import url("leaderboard.css");
 @import url("stats.css");
+@import url("profile.css");
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
