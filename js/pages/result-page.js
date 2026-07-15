@@ -2,6 +2,7 @@
 // একটা নির্দিষ্ট রেজাল্ট দেখানোর পেজ
 
 import { renderNavbar } from "../components/navbar.js";
+import { renderMobileNav } from "../components/mobile-nav.js";
 import { getResultById } from "../services/result-service.js";
 import { formatMinutesToReadable } from "../utils/time-utils.js";
 import { auth } from "../config/firebase-config.js";
@@ -9,6 +10,7 @@ import { navigateTo } from "../router/router.js";
 
 export async function renderResultPage(rootEl, resultId) {
   rootEl.appendChild(renderNavbar());
+  rootEl.appendChild(renderMobileNav());
 
   const main = document.createElement("main");
   main.className = "result-page";
